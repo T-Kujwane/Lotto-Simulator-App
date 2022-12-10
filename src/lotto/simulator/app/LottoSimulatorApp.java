@@ -6,6 +6,7 @@ package lotto.simulator.app;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -113,22 +114,21 @@ public class LottoSimulatorApp {
     //This method populates an array of lotto numbers with unique random numbers
     public static void generateLottoNumbers(int[] lottoNumbers) {
         for (int i = 0; i < lottoNumbers.length; i++) {
-            //For each array index
-
-            //We generate a random number
-            int randomNumber = 1 + (int) Math.floor(Math.random() * (49));
-
-            //For a number to be unique, it must not exist in a given list / array of numbers
-            //We call a method to check if the generated number is unique or not
-            boolean isUnique = examineIfUnique(randomNumber, lottoNumbers);
-
-            //While the number is not unique, generate a new number and check if it's unique or not
-            //This loop will keep on generatin g random numbers until it finds a unique number
-            while (!isUnique) {
-                randomNumber = 1 + (int) Math.floor(Math.random() * (49));
+            //Generate a unique random number for each array index
+            
+            //Declare variables
+            int randomNumber; 
+            boolean isUnique;
+            
+            do {
+                //Generate a random number between 1 and 49
+                randomNumber = new Random().nextInt(1, 50);
+                
+                //Check if the generated number is unique or not
                 isUnique = examineIfUnique(randomNumber, lottoNumbers);
-            }
-
+                
+            } while (!isUnique);
+            
             //Once we find a unique number, we then store it in the array of lotto numbers
             lottoNumbers[i] = randomNumber;
         }

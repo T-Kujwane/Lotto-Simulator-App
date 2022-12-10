@@ -25,7 +25,7 @@ public class LottoSimulatorApp {
         //Instantiate Scanner
         Scanner sc = new Scanner(System.in);
         //Declare variable
-        boolean userWantsToPlay;
+        boolean userWantsToPlay, userNumsCountValid;
 
         do {
             //Generate unique lotto numbers by calling the method responsible for the task
@@ -37,14 +37,16 @@ public class LottoSimulatorApp {
                 //Prompt user for the total numbers to play
                 System.out.print("How many numbers do you want to play? ");
                 totNumbers = sc.nextInt();
-
+                
+                userNumsCountValid = validateUserNumbersCount(lottoNumbers.length, totNumbers);
+                
                 //Evaluate user input
-                if (totNumbers < 1 || totNumbers > lottoNumbers.length) {
+                if (!userNumsCountValid) {
                     //Display error message
                     System.out.println("Cannot play " + totNumbers + " of " + lottoNumbers.length + " numbers.");
                 }
                 //Continue prompting while the user wants to play 0 or more than 6 numbers
-            } while (totNumbers < 1 || totNumbers > lottoNumbers.length);
+            } while (! userNumsCountValid);
 
             //Get user numbers by calling a method that is responsible for the task
             //This method will prompt the user for numbers and return those numbers in an integer array
@@ -83,6 +85,10 @@ public class LottoSimulatorApp {
             userWantsToPlay = userResponse == 'Y';
             //Continue running the application while the user wants to play
         } while (userWantsToPlay);
+    }
+    
+    private static boolean validateUserNumbersCount(int totLottoNumbersCount, int userNumsCount){
+        return userNumsCount >= 1 && userNumsCount <= totLottoNumbersCount;
     }
 
     //This method checks if a given number exists in a given array
